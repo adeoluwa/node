@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./includes/head.ejs') %> 
+</head>
+<body>
+
+   <%- include('./includes/nav.ejs') %> 
+
+    <div>
+        <h1 style="text-align: center;">Home Page</h1>
+        <p class="text-center">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut inventore quibusdam mollitia! Nostrum quibusdam totam consectetur harum sunt commodi fugiat architecto, quod numquam repudiandae accusamus 
+        </p>
+    </div>
+
+
+    <div id="post"></div>
+    <script>
+        fetch('http://jsonplaceholder.typicode.com/posts').then((response) => response.json()).then((data) => {
+            for (let index = 0; index < data.length; index++) {
+                const element = data[index];
+                document.querySelector('#post').innerHTML += `
+
+                <div>
+                    <h1>${element.title}</h1>
+                    <p>${element.body}<p>
+                    
+                </div>
+                `
+            }
+        })
+    </script>
+    
+</body>
+</html>

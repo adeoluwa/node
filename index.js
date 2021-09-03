@@ -1,48 +1,41 @@
-const http = require('http');
+// import express
+const express = require('express');
 const path = require('path');
-const fs = require('fs');
+const homeRoutes = require('./routes/home.routes');
+const postsRoutes = require('./routes/posts.routes');
 
-const { data } = require('./first');
-const { getReqData } = require('../events');
+// initialize our app
+const app = express();
 
-const server = http.createServer(async (req, res) => {
-  if (req.url === '/' && req.method === 'GET') {
-    console.log(req.method);
-    let homeFile = path.join(__dirname, 'views/index.html');
-    let homePage = fs.readFileSync(homeFile, 'utf-8');
-    res.writeHead(200, { 'content-type': 'text/html' });
-    res.write(homePage);
-    res.end();
-  } else if (req.url === '/about' && req.method === 'GET') {
-    let aboutFile = path.join(__dirname, 'views/about.html');
-    let aboutPage = fs.readFileSync(aboutFile, 'utf-8');
-    res.writeHead(200, { 'content-type': 'text/html' });
-    res.write(aboutPage);
-    res.end();
-  } else if (req.url === '/contact-us' && req.method === 'GET') {
-    let contactFile = path.join(__dirname, 'views/contact.html');
-    let contactPage = fs.readFileSync(contactFile, 'utf-8');
-    res.writeHead(200, { 'content-type': 'text/html' });
-    res.write(contactPage);
-    res.end();
-  } else if (req.url === '/contact-us' && req.method === 'POST') {
-    res.writeHead(200, { 'Content-type': 'text/html' });
-    let body = await getReqData(req);
-    res.write(body)
-    res.end()
-  } else {
-    res.writeHead(404, { 'content-type': 'text/html' });
-    res.end('<h1>Page not found </h1>');
-  }
+// Post middleware
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
+
+// templating set up
+app.set('views', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+
+// static route middleware
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+// routes middleware
+app.use('/', homeRoutes);
+app.use('/post', postsRoutes)
+
+// app.get('/', (req, res, next) => {
+//   res.sendFile(path.join(__dirname, 'views/index.html'));
+// });
+
+app.get('/api/names', (req, res, next) => {
+  res.status(200).json({
+    names: ['Ejike', 'Chinedu', 'Smart'],
+  });
 });
 
-const port = 5000;
-server.listen(port, () => {
-  console.log(`server is running on http://localhost:${port}`);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`app is running on http://localhost:${PORT}`);
 });
-
-// case '/api/names':
-//   res.writeHead(200, { 'content-type': 'application/json' });
-//   res.write(JSON.stringify(data));
-//   res.end();
-//   return;

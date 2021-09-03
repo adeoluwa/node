@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./includes/head.ejs') %> 
+  </head>
+
+  <body>
+
+    <%- include('./includes/nav.ejs') %> 
+
+    <div>
+        <h1 class="text-center">Contact Us</h1>
+        <p class="text-center mt-1">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, libero! Voluptates nulla aliquid incidunt voluptatem, eos, unde dolorem in, quo non accusantium placeat atque iste enim exercitationem recusandae rerum ab.
+        </p>
+    </div>
+
+    
+
+    <form action="/contact-us" class="container" method="POST">
+      <div class="form-group">
+        <input type="text" name="fullname" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="text" name="email" class="form-control">
+      </div>
+      <div class="form-group">
+        <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Submit</button>
+      </div>
+    
+    </form>
+
+    <form action="/description" method="POST">
+     <button type="button" class="btn btn-outline-success">description</button>
+    </form>
+
+  </body>
+</html>
