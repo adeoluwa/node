@@ -17,14 +17,15 @@ const upload = multer({
   storage,
   limits: { fileSize: 1000000 },
   fileFilter: (req, file, callback) => {
-    console.log(file)
-    file.mimetype === 'image/jpeg' || file.mimetype === 'image/png';
-
-    if (file.mimetype === 'image/jpeg' || file.mimetype == 'image/png') {
-      callback(null, true);
-    } else {
-      callbacak(new Error('file type not supported upload jpeg or png'));
+    let fileType = ['image/jpeg', 'image/png'];
+    if (!fileType.includes(file.mimetype)) {
+      return callback(
+        new Error('file type not supported upload png, jpeg or jpg'),
+        false
+      );
     }
+
+    return callback(null, true);
   },
 });
 
@@ -42,13 +43,7 @@ router.get('/create', (req, res, next) => {
   });
 });
 
-router.post('/create', (req, res, next) => {
-  const image = upload.single('image');
-  image(req, res, (err) => {
-    if (err) {
-      return new Error(err);
-    }
-    console.log(req.file);
-  });
+router.post('/create', upload.single('image'), (req, res, next) => {
+  res.send(req.file);
 });
 module.exports = router;
