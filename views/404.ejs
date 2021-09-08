@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./includes/head.ejs') %>
+  </head>
+  <body>
+    <div
+      style="align-items: center"
+      class="container text-center w-100 d-flex mt-5 flex-column"
+    >
+      <div>
+        <h1 class="display-1">page not found</h1>
+        <p class="lead" style="font-size: 25px"><%= data %></p>
+        <p class="lead" style="font-size: 25px">
+          sorry the route you requested has been moved or doesn't exist
+        </p>
+        <a class="lead" href="/" style="font: size 25px">go back home</a>
+      </div>
+    </div>
+  </body>
+</html>
