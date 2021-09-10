@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../includes/head.ejs') %>
+
+    
+  </head>
+  <body>
+    <%- include('../includes/nav.ejs') %>
+    <div class="container mt-3 bg-light">
+      <div class="row">
+        <div class="col-md-6 offset-md-6 text-right">
+          <a href="/post/create" class="btn btn-warning shadow mt-2 mr-2">Edit Post</a>
+          <form  action="<% server_url %>/post/delete/<%= post.id %>?_method=DELETE" class="form-inline text-right" method="POST">
+            
+           <button type="submit" class="btn btn-danger  ml-5" style="margin-left: 60% !important;  ">Delete Post</button>  
+        
+        </form>
+        </div>
+      </div>
+
+
+      <div>
+        <h2 class="display-4"><%= post.title %> </h2>
+        <div class="w-75">
+            <img src="<%= server_url %>/<%= post.image %> "
+             alt="<%= post.title %>"
+             class="img-fluid"
+              >
+        </div>
+
+        <p class="lead"><%= post.description %> </p>
+
+        
+    </div>
+
+  </body>
+</html>

@@ -5,6 +5,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   res.render('index.ejs', {
     title: 'Home | Welcome',
+    server_url: req.server_url,
   });
 });
 

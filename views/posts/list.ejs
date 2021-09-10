@@ -8,17 +8,23 @@
     <div class="container mt-3 bg-light">
       <div class="row">
         <div class="col-md-6 offset-md-6 text-right">
-          <a href="/post/create" class="btn btn-primary">New Post</a>
+          <a href="<%= server_url %>/post/create/post" class="btn btn-primary">New Post</a>
         </div>
       </div>
 
+
       <div>
         <h2 class="display-4">Posts</h2>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui,
-        necessitatibus aut, ab labore consectetur repudiandae corporis ipsum
-        ratione nulla soluta magni consequatur expedita dicta animi reiciendis,
-        quasi distinctio laboriosam itaque!æææ
+
+        <% posts.map(post => { %> 
+          <div class="w-75 mb-3 p-3" style="background-color: #fff">
+            <h3 class="text-grey"><%= post.title %> </h3>
+            <img src="<%= post.image %> " alt="<%= post.title %>" class="img-fluid" >
+            <p><%= post.description.slice(0, 40) %>...</p>
+            <a href="<%= server_url %>/post/<%= post._id %> " class="btn btn-outline-dark">read more</a>
+          </div>
       </div>
-    </div>
+      <% }) %> 
+
   </body>
 </html>
