@@ -3,6 +3,9 @@ const multer = require('multer');
 const path = require('path');
 const Post = require('../models/Post');
 const fs = require('fs');
+const authController = require('../controller/authController')
+
+const postController = require('../controller/postController')
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -33,33 +36,12 @@ const upload = multer({
 
 const router = express.Router();
 
-// RETRIEVE
-router.get('/', async (req, res, next) => {
-  try {
-    let posts = await Post.find();
-    res.render('posts/list.ejs', {
-      title: 'Posts',
-      posts,
-      server_url: req.server_url,
-    });
-  } catch (error) {
-    next(error);
-  }
-});
+router.use(postController.logMethod)
 
-router.get('/:id', async (req, res, next) => {
-  try {
-    let { id } = req.params;
-    let post = await Post.findById({ _id: id });
-    res.render('posts/single.ejs', {
-      title: 'Posts -' + post.title,
-      post,
-      server_url: req.server_url,
-    });
-  } catch (error) {
-    next(error);
-  }
-});
+// RETRIEVE
+router.get('/', authController.authorization,postController.getAllPost);
+
+router.get('/:id', postController.getsinglepost );
 
 // router.get('/', (req, res, next) => {
 //   res.render('posts/list.ejs', {
